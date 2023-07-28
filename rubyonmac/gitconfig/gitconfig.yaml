@@ -1,0 +1,9 @@
+# Copyright © 2022 Moncef Belyamani d/b/a Monfresh LLC. All rights reserved.
+
+user:
+  name: "Jaron Schulz"
+  email: "{{ .email }}"
+
+# Possible values are: atom, bbedit, brackets, emacs, nano, nova, sublime, textmate, vim, vscode
+# Let me know if your favorite editor is missing.
+editor: "vscode"

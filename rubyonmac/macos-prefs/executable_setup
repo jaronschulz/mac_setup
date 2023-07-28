@@ -1,0 +1,567 @@
+#!/usr/bin/env ruby
+
+# Copyright © 2022 Moncef Belyamani d/b/a Monfresh LLC. All rights reserved.
+
+require "fileutils"
+include FileUtils
+require "yaml"
+
+SETTINGS = YAML.safe_load(File.read(File.expand_path("macos-prefs.yaml", __dir__)))
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+def boolean_to_int(setting)
+  setting ? 1 : 0
+end
+
+## SETTINGS
+
+VIEW_STYLES = {
+  "list" => "Nlsv",
+  "icons" => "icnv",
+  "columns" => "clmv",
+  "gallery" => "glyv"
+}
+
+GROUP_BY = {
+  "kind" => "Kind",
+  "date_last_opened" => "Date Last Opened",
+  "date_added" => "Date Added",
+  "date_modified" => "Date Modified",
+  "date_created" => "Date Created",
+  "tags" => "Finder Tags"
+}
+
+ARRANGE_BY = {
+  "kind" => "name",
+  "date_last_opened" => "dateLastOpened",
+  "date_added" => "dateAdded",
+  "date_modified" => "dateModified",
+  "date_created" => "dateCreated",
+  "tags" => "dateAdded"
+}
+
+NEW_FINDER_WINDOW = {
+  "home" => "PfHm",
+  "desktop" => "PfDe",
+  "documents" => "PfDo",
+  "icloud" => "PfID",
+  "recents" => "PfAF"
+}
+
+NEW_FINDER_WINDOW_PATH = {
+  "home" => "file://$HOME",
+  "desktop" => "file://$HOME/Desktop/",
+  "documents" => "file://$HOME/Documents/",
+  "icloud" => "file://$HOME/Library/Mobile%20Documents/com~apple~CloudDocs/",
+  "recents" => "file:///System/Library/CoreServices/Finder.app/Contents/Resources/MyLibraries/myDocuments.cannedSearch/"
+}
+
+SEARCH_ENGINE_ID = {
+  "duckduckgo" => "com.duckduckgo",
+  "google" => "com.google.www",
+  "yahoo" => "com.yahoo.www",
+  "bing" => "com.bing.www",
+  "ecosia" => "org.ecosia.www"
+}
+
+SEARCH_ENGINE = {
+  "duckduckgo" => "DuckDuckGo",
+  "google" => "Goole",
+  "yahoo" => "Yahoo!",
+  "bing" => "Bing",
+  "ecosia" => "Ecosia"
+}
+
+def finder_view_as
+  VIEW_STYLES[finder_preferred_view_style]
+end
+
+def dock_autohide
+  SETTINGS["dock"]["autohide"]
+end
+
+def dock_orientation
+  SETTINGS["dock"]["orientation"]
+end
+
+def rearrange_spaces
+  SETTINGS["dock"]["rearrange_spaces_in_mission_control"]
+end
+
+def show_recents
+  SETTINGS["dock"]["show_recents"]
+end
+
+def trackpad_tap_to_click
+  SETTINGS["trackpad"]["tap_to_click"]
+end
+
+def trackpad_tap_to_drag
+  SETTINGS["trackpad"]["tap_to_drag"]
+end
+
+def force_click_and_haptic_feedback
+  SETTINGS["trackpad"]["force_click_and_haptic_feedback"]
+end
+
+def finder_show_status_bar
+  SETTINGS["finder"]["show_status_bar"]
+end
+
+def finder_show_path_bar
+  SETTINGS["finder"]["show_path_bar"]
+end
+
+def finder_open_new_windows_in_home_folder
+  SETTINGS["finder"]["open_new_windows_in_home_folder"]
+end
+
+def finder_warn_before_emptying_trash
+  SETTINGS["finder"]["warn_before_emptying_trash"]
+end
+
+def finder_preferred_view_style
+  SETTINGS["finder"]["preferred_view_style"]
+end
+
+def finder_window
+  NEW_FINDER_WINDOW[finder_window_setting]
+end
+
+def finder_window_path
+  NEW_FINDER_WINDOW_PATH[finder_window_setting]
+end
+
+def finder_window_setting
+  SETTINGS["finder"]["open_new_windows_in"]
+end
+
+def stacks_grouping
+  SETTINGS["finder"]["stacks_group_by"]
+end
+
+def finder_stacks_group_by
+  GROUP_BY[stacks_grouping]
+end
+
+def finder_stacks_arrange_by
+  ARRANGE_BY[stacks_grouping]
+end
+
+def hot_corner_top_left
+  SETTINGS["hot_corners"]["top_left"]
+end
+
+def hot_corner_top_right
+  SETTINGS["hot_corners"]["top_right"]
+end
+
+def hot_corner_bottom_left
+  SETTINGS["hot_corners"]["bottom_left"]
+end
+
+def hot_corner_bottom_right
+  SETTINGS["hot_corners"]["bottom_right"]
+end
+
+def autocorrect_spelling
+  SETTINGS["keyboard"]["text"]["correct_spelling_automatically"]
+end
+
+def capitalize_words_automatically
+  SETTINGS["keyboard"]["text"]["capitalize_words_automatically"]
+end
+
+def add_period_with_double_space
+  SETTINGS["keyboard"]["text"]["add_period_with_double_space"]
+end
+
+def use_smart_quotes
+  SETTINGS["keyboard"]["text"]["use_smart_quotes"]
+end
+
+def use_smart_dashes
+  SETTINGS["keyboard"]["text"]["use_smart_dashes"]
+end
+
+def key_repeat_delay
+  SETTINGS["keyboard"]["text"]["intial_key_repeat_delay"]
+end
+
+def key_repeat_rate
+  SETTINGS["keyboard"]["text"]["key_repeat_rate"]
+end
+
+def get_hotkeys
+  SETTINGS["keyboard"]["hotkeys"]
+end
+
+# def iterm_prompt_on_quit
+#   SETTINGS["iterm"]["prompt_on_quit"]
+# end
+
+def safari_show_develop_menu
+  SETTINGS["safari"]["show_develop_menu"]
+end
+
+def safari_default_search_engine
+  SETTINGS["safari"]["default_search_engine"]
+end
+
+def search_engine
+  SEARCH_ENGINE[safari_default_search_engine]
+end
+
+def search_engine_id
+  SEARCH_ENGINE_ID[safari_default_search_engine]
+end
+
+def time_machine_prompt
+  SETTINGS["time_machine"]["do_not_prompt_to_use_new_hard_drives_as_backup_volume"]
+end
+
+def date_and_time_format
+  SETTINGS["date_and_time"]["format"]
+end
+
+def use_24_hour_clock
+  SETTINGS["date_and_time"]["use_24_hour_clock"]
+end
+
+## METHODS FOR UPDATING DEFAULTS
+
+def set_dock_prefs
+  set_dock_autohide
+  set_dock_orientation
+  set_spaces
+  # set_items_in_dock
+  set_launchpad
+end
+
+def set_dock_autohide
+  system "defaults write com.apple.dock 'autohide' -bool '#{dock_autohide}' && killall Dock"
+end
+
+def set_dock_orientation
+  system "defaults write com.apple.dock 'orientation' -string '#{dock_orientation}' && killall Dock"
+end
+
+def set_dock_recents
+  system "defaults write com.apple.dock 'mru-spaces' -bool '#{show_recents}' && killall Dock"
+end
+
+def set_spaces
+  system "defaults write com.apple.dock 'mru-spaces' -bool '#{rearrange_spaces}' && killall Dock"
+end
+
+def set_launchpad
+  system "defaults write com.apple.dock springboard-rows -int 3"
+  system "defaults write com.apple.dock springboard-columns -int 3"
+  system "killall Dock"
+  # system "lporg load ~/launchpad.yaml"
+end
+
+# def set_items_in_dock
+#   system "dockutil --remove all --no-restart"
+#   system "dockutil --add '~/Downloads' --no-restart"
+#   system "dockutil --add '~/.Trash'--no-restart"
+# end
+
+def set_trackpad_prefs
+  set_trackpad_tap_to_click
+  set_trackpad_tap_to_drag
+  set_trackpad_force_click_and_haptic_feedback
+end
+
+def set_trackpad_tap_to_click
+  system "defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad 'Clicking' -bool '#{trackpad_tap_to_click}'"
+  system "defaults write com.apple.AppleMultitouchTrackpad 'Clicking' -bool '#{trackpad_tap_to_click}'"
+end
+
+def set_trackpad_tap_to_drag
+  system "defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad 'Dragging' -bool '#{trackpad_tap_to_drag}'"
+  system "defaults write com.apple.AppleMultitouchTrackpad 'Dragging' -bool '#{trackpad_tap_to_drag}'"
+end
+
+def set_trackpad_force_click_and_haptic_feedback
+  system "defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad 'ForceSuppressed' -bool '#{force_click_and_haptic_feedback}'"
+  system "defaults write com.apple.AppleMultitouchTrackpad 'ForceSuppressed' -bool '#{force_click_and_haptic_feedback}'"
+end
+
+def set_finder_prefs
+  set_finder_status_bar
+  set_finder_path_bar
+  set_finder_new_window
+  set_finder_warn_before_emptying_trash
+  set_finder_view_as
+  set_finder_stacks_grouping
+end
+
+def set_finder_status_bar
+  system "defaults write com.apple.finder ShowStatusBar -bool #{finder_show_status_bar}"
+end
+
+def set_finder_path_bar
+  system "defaults write com.apple.finder ShowPathbar -bool #{finder_show_path_bar}"
+end
+
+def set_finder_new_window
+  system "defaults write com.apple.finder NewWindowTarget -string #{finder_window}"
+  system "defaults write com.apple.finder NewWindowTargetPath -string #{finder_window_path}"
+end
+
+def set_finder_warn_before_emptying_trash
+  system "defaults write com.apple.finder WarnOnEmptyTrash -bool #{finder_warn_before_emptying_trash}"
+end
+
+def set_finder_view_as
+  system "defaults write com.apple.finder FXPreferredViewStyle -string #{finder_view_as}"
+end
+
+def set_finder_stacks_grouping
+  system "defaults write com.apple.finder FXPreferredGroupBy -string '#{finder_stacks_group_by}'"
+  system "defaults write com.apple.finder DesktopViewSettings \"{ GroupBy = '#{finder_stacks_group_by}'; IconViewSettings = { arrangeBy = #{finder_stacks_arrange_by}; }; }\""
+end
+
+def set_hot_corners
+  set_hot_corner_top_left
+  set_hot_corner_top_right
+  set_hot_corner_bottom_left
+  set_hot_corner_bottom_right
+end
+
+def set_hot_corner_top_left
+  system "defaults write com.apple.dock wvous-tl-corner -int #{hot_corner_top_left}"
+end
+
+def set_hot_corner_top_right
+  system "defaults write com.apple.dock wvous-tr-corner -int #{hot_corner_top_right}"
+end
+
+def set_hot_corner_bottom_left
+  system "defaults write com.apple.dock wvous-bl-corner -int #{hot_corner_bottom_left}"
+end
+
+def set_hot_corner_bottom_right
+  system "defaults write com.apple.dock wvous-br-corner -int #{hot_corner_bottom_right}"
+end
+
+def set_keyboard_prefs
+  set_autocorrect
+  set_auto_cap
+  set_double_space_period
+  set_smart_dashes
+  set_smart_quotes
+  set_key_repeat_delay
+  set_hotkeys
+end
+
+def set_autocorrect
+  system "defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool #{autocorrect_spelling}"
+end
+
+def set_auto_cap
+  system "defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool #{capitalize_words_automatically}"
+end
+
+def set_double_space_period
+  system "defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool #{add_period_with_double_space}"
+end
+
+def set_smart_dashes
+  system "defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool #{use_smart_dashes}"
+end
+
+def set_smart_quotes
+  system "defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool #{use_smart_quotes}"
+end
+
+def set_key_repeat_delay
+  system "defaults write NSGlobalDomain InitialKeyRepeat -int #{key_repeat_delay}"
+end
+
+def set_key_repeat_rate
+  system "defaults write NSGlobalDomain KeyRepeat -int #{key_repeat_rate}"
+  system "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false"
+end
+
+def set_hotkeys
+  HOTKEYS_PLIST="${HOME}/Library/Preferences/com.apple.symbolichotkeys.plist"
+  system "plutil -replace AppleSymbolicHotKeys.64.value -string '32, 49, 1572864' #{HOTKEYS_PLIST}"
+end
+
+# def set_iterm_prompt_on_quit
+#   system "defaults write com.googlecode.iterm2 PromptOnQuit -bool #{iterm_prompt_on_quit}"
+# end
+
+def set_safari_prefs
+  set_safari_develop_menu
+  set_safari_default_search_engine
+end
+
+def set_safari_develop_menu
+  system "defaults write com.apple.Safari.SandboxBroker ShowDevelopMenu -int #{boolean_to_int(safari_show_develop_menu)}"
+  system "defaults write com.apple.Safari ShowDevelopMenu -int #{boolean_to_int(safari_show_develop_menu)}"
+  system "defaults write com.apple.Safari IncludeDevelopMenu -int #{boolean_to_int(safari_show_develop_menu)}"
+  system "defaults write com.apple.Safari WebKitPreferences.developerExtrasEnabled -bool #{safari_show_develop_menu}"
+end
+
+def set_safari_default_search_engine
+  system "defaults write -g NSPreferredWebServices \"{NSWebServicesProviderWebSearch = { NSDefaultDisplayName = '#{search_engine}'; NSProviderIdentifier = #{search_engine_id}; }; }\""
+  system "defaults write com.apple.Safari SearchProviderIdentifier -string #{search_engine_id}"
+  system "defaults write com.apple.Safari SearchProviderShortName -string #{search_engine}"
+end
+
+def set_save_as_dialog
+  system "defaults write -g NSNavPanelExpandedStateForSaveMode -bool true"
+  system "defaults write -g NSNavPanelExpandedStateForSaveMode2 -bool true"
+end
+
+def set_print_panel
+  system "defaults write -g PMPrintingExpandedStateForPrint -bool true"
+  system "defaults write -g PMPrintingExpandedStateForPrint2 -bool true"
+end
+
+def set_time_machine_prompt
+  system "defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool #{time_machine_prompt}"
+end
+
+def set_date_and_time_prefs
+  set_clock_format
+  set_24_clock
+end
+
+def set_clock_format
+  system "defaults write com.apple.menuextra.clock DateFormat -string '#{date_and_time_format}'"
+end
+
+def set_24_clock
+  system "defaults write NSGlobalDomain AppleICUForce24HourTime -bool #{use_24_hour_clock}"
+end
+
+def set_jarons_misc_prefs
+  system "default write NSGlobalDomain AppleInterfaceStyle -string 'Dark'"
+  system "default write NSGlobalDomain AAppleLocale -string 'en_DE@currency=EUR'"
+  system "default write NSGlobalDomain AppleMeasurementUnits -string 'Centimeters'"
+  system "default write NSGlobalDomain AppleMetricUnits -bool true"
+  system "default write NSGlobalDomain AppleTemperatureUnit -string 'Celsius'"
+  
+  system "default write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false"
+  system "default write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true"
+  system "default write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true"
+  system "default write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true"
+  system "default write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true"
+  system "default write NSGlobalDomain AppleKeyboardUIMode -int 3"
+  system "default write NSGlobalDomain NSWindowResizeTime -float 0.001"
+  
+  system "default write com.apple.LaunchServices LSQuarantine -bool false"
+
+  system "default write com.apple.BluetoothAudioAgent 'Apple Bitpool Min (editable)' -int 40"
+
+  TRUE_FINDER_KEYS = [
+    'QuitMenuItem',
+    'DisableAllAnimations',
+    'ShowExternalHardDrivesOnDesktop',
+    'ShowMountedServersOnDesktop',
+    'ShowRemovableMediaOnDesktop',
+    'AppleShowAllFiles',
+    'AppleShowAllExtensions',
+    'ShowStatusBar',
+    'ShowPathbar',
+    '_FXShowPosixPathInTitle',
+    '_FXSortFoldersFirst',
+  ]
+  TRUE_FINDER_KEYS.each do |key|
+    system "defaults write com.apple.finder #{key} -bool true"
+  end
+
+  FALSE_FINDER_KEYS = [
+    'FXEnableExtensionChangeWarning',
+    'howHardDrivesOnDesktop',
+    'WarnOnEmptyTrash',
+  ]
+  FALSE_FINDER_KEYS.each do |key|
+    system "defaults write com.apple.finder #{key} -bool false"
+  end
+
+  system "defaults write com.apple.finder NewWindowTarget -string PfHm"
+  system "defaults write com.apple.finder FXDefaultSearchScope -string SCcf"
+  system "defaults write com.apple.finder NewWindowTargetPath -string file://{{ lookup('env', 'HOME') }}/Desktop/"
+  system "default write NSGlobalDomain FXEnableExtensionChangeWarning -bool false"
+  system "defaults write com.apple.finder com.apple.springing.delay -float 0"
+  system "defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true"
+  system "defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true"
+
+  FALSE_DOCK_KEYS = [
+    'show-recents',
+    'launchanim',
+]
+  FALSE_DOCK_KEYS.each do |key|
+    system "defaults write com.apple.dock #{key} -bool false"
+  end
+
+  TRUE_DOCK_KEYS = [
+    'show-process-indicators',
+    'enable-spring-load-actions-on-all-items',
+]
+  TRUE_DOCK_KEYS.each do |key|
+    system "defaults write com.apple.dock #{key} -bool true"
+  end
+
+  system "defaults write com.apple.dock autohide-delay -float 0.0"
+  system "defaults write com.apple.dock autohide-time-modifier -float 0.0"
+  system "defaults write com.apple.dock expose-animation-duration -float 0.1"
+end
+
+def set_rectangle
+  system "defaults write com.knollsoft.Rectangle SUHasLaunchedBefore -bool true"
+  system "defaults write com.knollsoft.Rectangle alternateDefaultShortcuts -int 0 present"
+  system "defaults write com.knollsoft.Rectangle launchOnLogin -int 1 present"
+end
+
+# def set_bar_tender
+#   system "defaults write com.surteesstudios.Bartender 'NSStatusItem Preferred Position Item Identifiers' -array 'com.apple.menuextra.clock' 'com.apple.menuextra.battery' 'com.apple.menuextra.airport' 'com.apple.menuextra.volume' 'com.apple.menuextra.bluetooth'"
+
+# end
+
+# def set_raycast
+#   system "defaults write com.raycast.Raycast"
+# end
+
+# def set_warp
+#   # welcome_tips_completed: true
+#   # dismissed_warp_ai_warm_welcome: true
+#   # font_size: 13
+#   # has_auto_opened_welcome_folder: true
+#   # startup_shell_override: '\\"fish\\"'
+#   # startup_shell_override_enabled: true
+# end
+
+def restart_finder
+  system "killall Finder"
+end
+
+
+puts "Setting your macOS prefs..."
+
+## SET ALL PREFS
+set_dock_prefs
+set_dock_recents
+set_trackpad_prefs
+set_finder_prefs
+set_hot_corners
+set_keyboard_prefs
+set_iterm_prompt_on_quit
+set_safari_prefs
+set_time_machine_prompt
+set_save_as_dialog
+set_print_panel
+set_date_and_time_prefs
+set_jarons_misc_prefs
+set_rectangle
+restart_finder
+
+puts "Done writing macOS prefs. You might need to log out or restart to apply some changes."

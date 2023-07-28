@@ -1,0 +1,271 @@
+### Other popular dev tools and languages ###
+# brew 'advancecomp'
+# brew 'asdf'
+# brew 'autoconf'
+brew 'aws-iam-authenticator'
+brew 'awscli'
+brew 'azure-cli'
+# brew 'bash'
+# brew 'bat'
+brew 'bitwarden-cli'
+brew 'blacktop/tap/lporg'
+# brew 'blueutil'
+# brew 'brightness'
+# brew 'chamber'
+brew 'chezmoi'
+# brew 'circleci'
+# brew 'composer'
+# brew 'crystal'
+# brew 'difftastic'
+# brew 'direnv'
+brew 'dockutil'
+# brew 'dropbox-uploader'
+# brew 'elixir'
+# brew 'entr'
+# brew 'exa'
+brew 'exercism'
+# brew 'fd'
+brew 'fish'
+brew 'fnm'
+# brew 'fontconfig'
+# brew 'frum'
+brew 'gh'
+# brew 'ghostscript'
+brew 'go'
+# brew 'graphviz'
+# brew 'grc'
+brew 'gvm'
+# brew 'httpie'
+# brew 'hugo'
+# brew 'ical-buddy'
+# brew 'jc'
+# brew 'jless'
+# brew 'jq'
+brew 'kubernetes-cli'
+# brew 'lazygit'
+brew 'lefthook'
+# brew 'lolcat'
+# brew 'memcached'
+# brew 'multimarkdown'
+# brew 'neovim'
+# brew 'openjdk'
+# brew 'oxipng'
+# brew 'pandoc'
+# brew 'pdfgrep'
+# brew 'php'
+# brew 'pngquant'
+brew 'pnpm'
+brew 'poetry'
+# brew 'pre-commit'
+# brew 'python'
+# brew 'ripgrep'
+# brew 'rsync'
+brew 'rustup-init'
+brew 'saml2aws'
+brew 'sheldon'
+# brew 'shellcheck'
+brew 'shopify-cli'
+# brew 'sqlite'
+brew 'starship'
+# brew 't-rec'
+# brew 'tag'
+# brew 'terminal-notifier'
+brew 'terraform'
+# brew 'tflint'
+# brew 'tfsec'
+# brew 'tldr'
+brew 'tmux'
+# brew 'tmuxinator'
+# brew 'tre-command'
+brew 'tree-sitter'
+brew 'tree'
+brew 'uru'
+# brew 'vips'
+# brew 'watchexec'
+# brew 'watchman'
+# brew 'wget'
+# brew 'yamllint'
+brew 'yarn'
+# brew 'youtube-dl'
+# brew 'zoxide'
+# brew 'zsh-history-substring-search'
+# brew 'zsh'
+
+### Popular Mac apps ###
+cask_args force: true
+cask 'adobe-creative-cloud'
+# cask 'alfred'
+# cask 'alt-tab'
+cask 'arc'
+cask 'archiver'
+# cask 'atom'
+# cask 'audio-hijack'
+cask 'aws-vault'
+cask 'backblaze'
+cask 'bartender'
+# cask 'bbedit'
+cask 'beeper'
+cask 'blender'
+# cask 'bookmacster'
+# cask 'brackets'
+# cask 'brave-browser'
+# cask 'bunch'
+# cask 'calibre'
+# cask 'charles'
+# cask 'cheatsheet'
+cask 'cleanmymac'
+cask 'cloudflare/cloudflare/cf-terraforming'
+cask 'dash'
+# cask 'descript'
+cask 'discord'
+cask 'docker'
+# cask 'dropbox'
+# cask 'dupeguru'
+# cask 'ecamm-live'
+# cask 'elgato-stream-deck' # requires enabling the tap above it
+# cask 'emacs'
+# cask 'espanso'
+# cask 'evernote'
+# cask 'fantastical'
+# cask 'farrago'
+# cask 'firefox'
+# cask 'flux'
+# cask 'forklift'
+# cask 'gemini'
+cask 'github'
+# cask 'goland'
+# cask 'google-chrome'
+cask 'google-drive'
+# cask 'hashicorp-boundary-desktop'
+# cask 'hey'
+# cask 'imageoptim'
+cask 'insomnia'
+# cask 'iterm2'
+cask 'jetbrains-toolbox'
+# cask 'karabiner-elements'
+# cask 'keybase'
+# cask 'keyboard-maestro'
+cask 'kindle'
+# cask 'kitty'
+# cask 'loom'
+# cask 'loopback'
+# cask 'mactex'
+# cask 'mactracker'
+cask 'mark-text'
+# cask 'marked'
+# cask 'microsoft-edge'
+# cask 'microsoft-teams'
+cask 'monitorcontrol'
+# cask 'moom'
+# cask 'native-access'
+cask 'ngrok'
+# cask 'notion'
+cask 'notunes'
+# cask 'numi'
+# cask 'obsidian'
+# cask 'omnifocus'
+# cask 'opensc'
+# cask 'popclip'
+# cask 'postman'
+cask 'raycast'
+cask 'rectangle'
+# cask 'rocket'
+# cask 'rubymine'
+# cask 'screenflow'
+# cask 'scrivener'
+# cask 'setapp'
+cask 'signal'
+# cask 'skype'
+# cask 'slack'
+# cask 'spectacle'
+# cask 'spotify'
+# cask 'sublime-text'
+cask 'surfshark'
+cask 'tableplus'
+cask 'telegram'
+# cask 'textmate'
+cask 'ticktick'
+# cask 'timing'
+# cask 'tower'
+# cask 'typora'
+cask 'visual-studio-code'
+# cask 'vlc'
+cask 'warp'
+# cask 'whatsapp'
+# cask 'zoom'
+# cask "qlcolorcode"
+# cask "qlimagesize"
+# cask "qlmarkdown"
+# cask "qlstephen"
+# cask "quicken"
+# cask "quicklook-json"
+tap 'homebrew/cask-drivers'
+tap 'homebrew/cask-versions'
+
+# Fonts
+tap 'homebrew/cask-fonts'
+# cask 'font-anonymous-pro'
+cask 'font-fira-code-nerd-font'
+cask 'font-fira-code'
+cask 'font-fira-mono-for-powerline'
+cask 'font-fira-mono-nerd-font'
+# cask 'font-fira-mono'
+# cask 'font-hack-nerd-font'
+# cask 'font-hack'
+# cask 'font-inconsolata'
+cask 'font-jetbrains-mono-nerd-font'
+cask 'font-jetbrains-mono'
+# cask 'font-source-code-pro'
+# cask 'font-source-code-pro-for-powerline'
+# cask 'font-sauce-code-pro-nerd-font'
+
+### App store apps that you can install with the "mas" tool ###
+### You'll need to sign in to the App Store first before running the script. ###
+### Visit https://github.com/mas-cli/mas#-usage for more info. ###
+brew 'mas'
+# mas '1Blocker', id: 1365531024
+# mas '1Password', id: 1333542190
+mas 'Bitwarden', id: 1352778147
+# mas 'Bear', id: 1091189122
+# mas 'Capo', id: 696977615
+# mas 'Craft - Docs and Notes Editor', id: 1487937127
+# mas 'Darkroom: Photo & Video Editor', id: 953286746
+# mas 'Dato', id: 1470584107
+# mas 'Day One', id: 1055511498
+# mas 'Drafts', id: 1435957248
+# mas 'DuckDuckGo Privacy Essentials', id: 1482920575
+# mas 'Duplicate Detective: Cleaner', id: 686428787
+# mas 'Evernote', id: 406056744
+# mas 'GarageBand', id: 682658836
+# mas 'Harvest', id: 506189836
+# mas 'iMovie', id: 408981434
+# mas 'Instapaper', id: 288545208
+# mas 'Instapaper Save', id: 1481302432
+# mas 'Keynote', id: 409183694
+# mas 'Kindle', id: 405399194
+# mas 'Mactracker', id: 430255202
+# mas 'Marked 2', id: 890031187
+mas 'Menu World Time', id: 1446377255  
+# mas 'Moom', id: 419330170
+# mas 'Numbers', id: 409203825
+# mas 'Pages', id: 409201541
+# mas 'Pins for Pinboard', id: 1547106997
+# mas 'Pixelmator Pro', id: 1289583905
+# mas 'Pocket', id: 568494494
+# mas 'Polarr Photo Editor', id: 1077124956
+# mas 'Poolsuite FM', id: 1514817810
+# mas 'PopClip', id: 445189367
+# mas 'RetailMeNot Deal Finder', id: 1588381926
+# mas 'Slack', id: 803453959
+# mas 'Stellar for Reddit', id: 1566795636
+# mas 'Step Two', id: 1448916662
+# mas 'Strides: Goal Tracker', id: 672401817
+# mas 'Telegram', id: 747648890
+# mas 'TweetDeck', id: 485812721
+# mas 'TwistedWave', id: 408452636
+# mas 'Twitter', id: 1482454543
+# mas 'Ulysses | Writing App', id: 1225570693
+mas 'We Love Lights', id: 1479422551
+# mas 'WhatsApp', id: 1147396723
+# mas 'WireGuard', id: 1451685025
+# mas 'Xcode', id: 497799835
