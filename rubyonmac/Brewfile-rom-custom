@@ -1,4 +1,5 @@
 ### Other popular dev tools and languages ###
+tap shopify/shopify
 # brew 'advancecomp'
 # brew 'asdf'
 # brew 'autoconf'
@@ -92,6 +93,8 @@ brew 'yarn'
 # brew 'zsh'
 
 ### Popular Mac apps ###
+tap 'homebrew/cask-drivers'
+tap 'homebrew/cask-versions'
 cask_args force: true
 cask 'adobe-creative-cloud'
 # cask 'alfred'
@@ -199,8 +202,6 @@ cask 'warp'
 # cask "qlstephen"
 # cask "quicken"
 # cask "quicklook-json"
-tap 'homebrew/cask-drivers'
-tap 'homebrew/cask-versions'
 
 # Fonts
 tap 'homebrew/cask-fonts'
