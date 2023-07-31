@@ -1,0 +1,25 @@
+# Copyright © 2022 Moncef Belyamani d/b/a Monfresh LLC. All rights reserved.
+
+# For each repo you want to clone from GitHub, specify the name of the GitHub
+# repo and the path of the top-level folder where you want the repo to be cloned.
+# For now, the repo name locally must match the name of the repo on GitHub, so
+# don't include the repo name in the path.
+
+# For the "name", include both the GitHub username or org name and the repo name,
+# separated by a slash.
+# For example:
+# This will create a folder called Keyboard-Maestro-Macros in ~/code
+# - path: ~/code
+#   name: monfresh/Keyboard-Maestro-Macros
+
+- path: ~/Code/--Learning/react-tdd
+  name: jaronschulz/opinion-ate
+
+- path: ~/Code/00-DH
+  name: deliveryhero/logistics-rooster-settings
+
+- path: ~/Code/01-theHowl/berliner_bumerang
+  name: theHowl-dev/bb-shopify-debut
+
+- path: ~/Code/02-Private/net_ninja
+  name: jaronschulz/asteroids
