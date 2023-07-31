@@ -12,14 +12,14 @@
 # - path: ~/code
 #   name: monfresh/Keyboard-Maestro-Macros
 
-- path: ~/Code/--Learning/react-tdd
+- path: ~/Projects/code/--Learning/react-tdd
   name: jaronschulz/opinion-ate
 
-- path: ~/Code/00-DH
+- path: ~/Projects/code/00-DH
   name: deliveryhero/logistics-rooster-settings
 
-- path: ~/Code/01-theHowl/berliner_bumerang
+- path: ~/Projects/code/01-theHowl/berliner_bumerang
   name: theHowl-dev/bb-shopify-debut
 
-- path: ~/Code/02-Private/net_ninja
+- path: ~/Projects/code/02-Private/net_ninja
   name: jaronschulz/asteroids
