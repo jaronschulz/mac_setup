@@ -31,7 +31,8 @@ chezmoi init https://github.com/jaronschulz/mac-setup.git
 1. Run `rubyonmac` script again, but this time:
 
 ```shell
-cd ~/Downloads/rubyonmac-ultimate /bin/bash install-newmac
+cd ~/Downloads/rubyonmac-ultimate
+/bin/bash install-newmac
 ```
 
 9. Restart the computer.
