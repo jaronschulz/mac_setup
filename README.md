@@ -12,7 +12,8 @@ This repo contains all the scripts I use to set up a new Mac, and to keep my dot
 6. Download [Ruby on Mac](https://www.rubyonmac.dev) Ultimate into the `Download` directory and run it with:
 
 ```shell
-cd ~/Downloads/rubyonmac-ultimate /bin/bash install
+cd ~/Downloads/rubyonmac-ultimate
+/bin/bash install
 ```
 
 7. Now install `chezmoi`:
