@@ -25,7 +25,7 @@ brew install chezmoi
 and initialize it with:
 
 ```shell
-chezmoi init https://github.com/jaronschulz/mac-setup.git
+chezmoi init https://github.com/jaronschulz/mac_setup.git
 ```
 
 1. Run `rubyonmac` script again, but this time:
